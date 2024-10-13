@@ -1,0 +1,11 @@
+# Ignorar la carpeta de configuración de Obsidian
+.obsidian/
+
+# Ignorar archivos temporales y de sistema
+.trash/
+.DS_Store
+Thumbs.db
+
+# Ignorar configuraciones de plugins y temas de Obsidian (opcional)
+.obsidian/plugins/
+.obsidian/themes/
