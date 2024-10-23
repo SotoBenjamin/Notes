@@ -145,3 +145,123 @@ SUB R1,R1,#78
 THERE
 	ADD R1,R1,#78  R1 = 87
 ```
+#### if-else statements and switch case
+> [!PDF|] [[Digital Design and Computer Arc - Sarah L. Harris.pdf#page=336&selection=65,0,65,17|Digital Design and Computer Arc - Sarah L. Harris, p.311]]
+> > IF/ELSE STATEMENT
+
+#### loops (for and while)
+##### while:
+```assembly
+;R0 = pow, R1 = x
+MOV R0,#1 ; pow = 1
+MOV R1,#0 ; x = 0
+WHILE:
+ cmp R0,#128
+ BEQ DONE
+ LSL R0,R0,#1
+ ADD R1,R1,#1
+ B WHILE
+DONE:
+	
+
+```
+##### for:
+```assembly
+;R0 = i , R1 = s
+
+MOV,R0,#0
+MOV R1,#0
+
+FOR:
+	CMP R0,#10
+	BGE DONE
+	ADD R1,R1,R0
+	ADD R0,R0,#1
+	B FOR
+DONE: 	
+
+```
+
+### Memory
+> [!PDF|] [[Digital Design and Computer Arc - Sarah L. Harris.pdf#page=339&selection=53,0,54,1|Digital Design and Computer Arc - Sarah L. Harris, p.314]]
+> > Code Example 6.18 
+
+![[Captura de pantalla 2024-10-19 a la(s) 7.55.33 p. m..png]]
+> [!PDF|] [[Digital Design and Computer Arc - Sarah L. Harris.pdf#page=338&selection=51,0,66,24|Digital Design and Computer Arc - Sarah L. Harris, p.313]]
+> > ARM can scale (multiply) the index, add it to the base address, and load from memory in a single instruction. Instead of the LSL and LDR instruction sequence in Code Example 6.18, we can use a single instruction: LDR R3, [R0, R1, LSL #2]
+
+> [!PDF|] [[Digital Design and Computer Arc - Sarah L. Harris.pdf#page=339&selection=0,0,75,2|Digital Design and Computer Arc - Sarah L. Harris, p.314]]
+> > In addition to scaling the index register, ARM provides offset, preindexed, and post-indexed addressing to enable dense and efficient code for array accesses and function calls. Table 6.4 gives examples of each indexing mode. In each case, the base register is R1 and the offset is R2. The offset can be subtracted by writing –R2. The offset may also be an immediate in the range of 0–4095 that can be added (e.g., #20) or subtracted (e.g., #−20). Offset addressing calculates the address as the base register ± the offset; the base register is unchanged. Pre-indexed addressing calculates the address as the base register ± the offset and updates the base register to this new address. Post-indexed addressing calculates the address as the base register only and then, after accessing memory, the base register is updated to the base register ± the offset. We have seen many examples of offset indexing mode. Code Example 6.19 shows the for loop from Code Example 6.18 rewritten to use post-indexing, eliminating the ADD to increment i.
+> 
+
+
+![[Captura de pantalla 2024-10-19 a la(s) 8.05.41 p. m..png]]
+> [!PDF|] [[Digital Design and Computer Arc - Sarah L. Harris.pdf#page=340&selection=108,0,109,1|Digital Design and Computer Arc - Sarah L. Harris, p.315]]
+> > Code Example 6.19 
+
+### Bytes And Memory
+
+> [!PDF|] [[Digital Design and Computer Arc - Sarah L. Harris.pdf#page=340&selection=85,0,106,74|Digital Design and Computer Arc - Sarah L. Harris, p.315]]
+> > ARM provides load byte (LDRB), load signed byte (LDRSB), and store byte (STRB) to access individual bytes in memory. LDRB zero-extends the byte, whereas LDRSB sign-extends the byte to fill the entire 32-bit register. STRB stores the least significant byte of the 32-bit register into the specified byte address in memory. All three are illustrated in Figure 6.9, with the base address R4 being 0. LDRB loads the byte at memory address 2 into the least significant byte of R1 and fills the remaining register bits with 0. LDRSB loads this byte into R2 and sign-extends the byte into the upper 24 bits of the register. STRB stores the least significant byte of R3 (0x9B) into memory byte 3; it replaces 0xF7 with 0x9B. The more significant bytes of R3 are ignored.
+
+![[Captura de pantalla 2024-10-20 a la(s) 7.29.49 a. m..png]]
+![[Captura de pantalla 2024-10-20 a la(s) 7.32.30 a. m..png]]
+
+> [!PDF|] [[Digital Design and Computer Arc - Sarah L. Harris.pdf#page=341&selection=18,0,31,67|Digital Design and Computer Arc - Sarah L. Harris, p.316]]
+> > A series of characters is called a string. Strings have a variable length, so programming languages must provide a way to determine the length or end of the string. In C, the null character (0x00) signifies the end of a string. For example, Figure 6.10 shows the string “Hello!” (0x48 65 6C 6C 6F 21 00) stored in memory. The string is seven bytes long and extends from address 0x1522FFF0 to 0x1522FFF6. The first character of the string (H = 0x48) is stored at the lowest byte address (0x1522FFF0).
+
+![[Captura de pantalla 2024-10-20 a la(s) 7.39.18 a. m..png]]
+> [!PDF|] [[Digital Design and Computer Arc - Sarah L. Harris.pdf#page=342&selection=69,0,79,27|Digital Design and Computer Arc - Sarah L. Harris, p.317]]
+> > Example 6.2 USING LDRB AND STRB TO ACCESS A CHARACTER ARRAY
+
+### Function Calls
+> [!PDF|] [[Digital Design and Computer Arc - Sarah L. Harris.pdf#page=342&selection=56,0,67,35|Digital Design and Computer Arc - Sarah L. Harris, p.317]]
+> > When one function calls another, the calling function, the caller, and the called function, the callee, must agree on where to put the arguments and the return value. In ARM, the caller conventionally places up to four arguments in registers R0–R3 before making the function call, and the callee places the return value in register R0 before finishing. By following this convention, both functions know where to find the arguments and return value, even if the caller and callee were written by different people. The callee must not interfere with the behavior of the caller. This means that the callee must know where to return to after it completes and it must not trample on any registers or memory needed by the caller. The caller stores the return address in the link register LR at the same time it jumps to the callee using the branch and link instruction (BL). The callee must not overwrite any architectural state or memory that the caller is depending on. Specifically, the callee must leave the saved registers (R4–R11, and LR) and the stack, a portion of memory used for temporary variables, unmodified. This section shows how to call and return from a function. It shows how functions access input arguments and the return value and how they use the stack to store temporary variables.
+> > 
+
+> [!PDF|] [[Digital Design and Computer Arc - Sarah L. Harris.pdf#page=350&selection=108,0,110,21|Digital Design and Computer Arc - Sarah L. Harris, p.325]]
+> > Code Example 6.26 NONLEAF FUNCTION CALL
+
+#### Recursive Function Call
+```
+.global _start
+_start:
+	MOV R0,#3
+	BL FACTORIAL
+	B _end
+
+FACTORIAL:
+	PUSH {R0,LR}
+	CMP R0,#1
+	BGT ELSE
+	MOV R0,#1
+	ADD SP,SP,#8
+	MOV PC,LR
+ELSE:
+	SUB R0,R0,#1
+	BL FACTORIAL
+	POP {R1,LR}
+	MUL R0,R0,R1
+	MOV PC,LR
+```
+> [!PDF|] [[Digital Design and Computer Arc - Sarah L. Harris.pdf#page=352&selection=65,0,65,17|Digital Design and Computer Arc - Sarah L. Harris, p.327]]
+> > Code Example 6.27
+
+![[Captura de pantalla 2024-10-20 a la(s) 1.22.42 p. m..png]]
+### Machine Code
+Main Instructions format:
+- Data Processing
+- Memory
+- Branch
+#### Data Processing
+The 32-bit instruction has six fields cond, op, funct, Rn, Rd, Scr2
+![[Captura de pantalla 2024-10-20 a la(s) 10.09.41 p. m..png]]
+op: operation code (00) for data processing , funct: function code , cond : conditional execution 
+(1110) for unconditional. The operands are Rn (first source) , Rd (destiny) , Src2 (second source)
+Scr2 can be an immediate or a register
+> [!PDF|] [[Digital Design and Computer Arc - Sarah L. Harris.pdf#page=355&selection=56,1,147,27|Digital Design and Computer Arc - Sarah L. Harris, p.330]]
+> > Figure 6.17 shows the format of the funct field and the three variations of Src2 for data-processing instructions. funct has three subfields: I, cmd, and S. The I-bit is 1 when Src2 is an immediate. The S-bit is 1 when the instruction sets the condition flags. For example, SUBS R1, R9, #11 has S = 1. cmd indicates the specific data-processing instruction, as given in Table B.1 in Appendix B. For example, cmd is 4 (0100 2) for ADD and 2 (0010 2 ) for SUB. Three variations of Src2 encoding allow the second source operand to be (1) an immediate, (2) a register (Rm) optionally shifted by a constant (shamt5), or (3) a register (Rm) shifted by another register (Rs). For the latter two encodings of Src2, sh encodes the type of shift to perform, as will be shown in Table 6.8.
+
+![[Captura de pantalla 2024-10-20 a la(s) 10.23.11 p. m..png]]
+![[Captura de pantalla 2024-10-20 a la(s) 10.46.29 p. m..png]]
+![[Captura de pantalla 2024-10-20 a la(s) 10.50.36 p. m..png]]
