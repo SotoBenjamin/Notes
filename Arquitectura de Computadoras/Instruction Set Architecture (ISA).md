@@ -265,3 +265,11 @@ Scr2 can be an immediate or a register
 ![[Captura de pantalla 2024-10-20 a la(s) 10.23.11 p. m..png]]
 ![[Captura de pantalla 2024-10-20 a la(s) 10.46.29 p. m..png]]
 ![[Captura de pantalla 2024-10-20 a la(s) 10.50.36 p. m..png]]
+#### Memory
+![[Captura de pantalla 2024-11-10 a la(s) 1.04.40 p. m..png]]
+![[Captura de pantalla 2024-11-10 a la(s) 1.05.07 p. m..png]]
+![[Captura de pantalla 2024-11-10 a la(s) 1.05.48 p. m..png]]
+
+#### Branch
+![[Captura de pantalla 2024-11-10 a la(s) 1.26.54 p. m..png]]
+![[Captura de pantalla 2024-11-10 a la(s) 1.27.35 p. m..png]]
