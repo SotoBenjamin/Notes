@@ -1,4 +1,4 @@
-Executes instructions in a single cycle.
+	Executes instructions in a single cycle.
 We begin constructing the datapath by connecting the state elements.
 ![[Captura de pantalla 2024-11-10 a la(s) 12.55.37 p. m..png]]
 ## Single Cycle Datapath
